@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hometown Childhood Favorites</title>
+
+  <style>
+    
+  </style>
+
+  
+</head>
+<body>
+  
+<!doctype html>
+<html>
+<head>
+<title>Hometown Childhood Favorites</title>
+
+
+<style>
+gmp-map {
+ height: 500px;
+ width: 100%;
+}
+</style>
+
+
+<script>
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly"});
+</script>
+</head>
+
+
+<body>
+
+
+<gmp-map id="map"
+center="42.681818235748956,-71.33284604400376"
+zoom="12">
+
+
+<div slot="control-inline-start-block-start">
+<h3>Hometown Childhood Favorites</h3>
+</div>
+
+
+</gmp-map>
+
+
+<script type="module">
+const { Marker } = await google.maps.importLibrary("marker");
+
+
+const locations = [
+{
+name: "Shaw Farm",
+position: { lat: 42.681818235748956, lng: -71.33284604400376 },
+description: "A place I always associate with summer. We would come here for ice cream and to look at the cows. It's easily the best ice cream in town."
+},
+{
+name: "Dillon MacAnespie Field",
+position: { lat: 42.679387737532736, lng: -71.3584264555086 },
+description: "Where I spent a lot of time playing basketball as a kid in the summer league. I would also come here with my friends to ride our ripsticks around the courts."
+},
+{
+name: "Mascuppic Lake",
+position: { lat: 42.6793803177175, lng: -71.38177060468543 },
+description: "This is the lake we would go swimming at and spend the 4th of July. The fireworks over the water were always the best."
+},
+{
+name: "The Village Inn",
+position: { lat: 42.68375791622271, lng: -71.28218491885842 },
+description: "My favorite local restaurant. Known (to me at least) for having the best dinner rolls and steak tips."
+},
+{
+name: "Veterans Memorial Park",
+position: { lat: 42.67345885770123, lng: -71.29827185110061 },
+description: "My favorite park in town. It has a playground, sports fields, and even a little waterpark. It’s also where my sister’s soccer tournaments were held, so I spent a lot of weekends here."
+}
+];
+
+
+const mapElement = document.querySelector("gmp-map");
+
+
+await customElements.whenDefined("gmp-map");
+const map = mapElement.innerMap;
+
+
+const bounds = new google.maps.LatLngBounds();
+const infoWindow = new google.maps.InfoWindow();
+
+
+locations.forEach(loc => {
+ const marker = new Marker({
+   map: map,
+   position: loc.position,
+   title: loc.name
+ });
+
+
+ marker.addListener("click", () => {
+   infoWindow.setContent(`
+     <div>
+       <h3>${loc.name}</h3>
+       <p>${loc.description}</p>
+     </div>
+   `);
+
+
+   infoWindow.open(map, marker);
+
+
+   marker.setAnimation(google.maps.Animation.BOUNCE);
+   setTimeout(() => marker.setAnimation(null), 1400);
+ });
+
+
+ bounds.extend(loc.position);
+});
+
+
+map.fitBounds(bounds);
+</script>
+
+
+</body>
+</html>
+
+
+
+
+  <script>
+    
+  </script>
+</body>
+</html>
