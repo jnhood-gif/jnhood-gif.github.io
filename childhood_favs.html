@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Childhood Favorites in My Area</title>
+
+  <style>
+    gmp-map {
+      height: 500px;
+      width: 100%;
+    }
+
+    .title {
+      font-size: 28px;
+      background: rgba(255,255,255,0.9);
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin: 10px;
+      text-align: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .controls {
+      background: white;
+      padding: 10px;
+      font-family: Arial;
+      position: absolute;
+      z-index: 5;
+      top: 80px; 
+      left: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+  </style>
+
+  <script>
+    (g => {
+      var h, a, k,
+      p = "The Google Maps JavaScript API",
+      c = "google",
+      l = "importLibrary",
+      q = "__ib__",
+      m = document,
+      b = window;
+
+      b = b[c] || (b[c] = {});
+      var d = b.maps || (b.maps = {}),
+      r = new Set,
+      e = new URLSearchParams,
+      u = () => h || (h = new Promise(async (f, n) => {
+        await (a = m.createElement("script"));
+        e.set("libraries", [...r] + "");
+        for (k in g)
+          e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+        e.set("callback", c + ".maps." + q);
+        a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+        d[q] = f;
+        a.onerror = () => h = n(Error(p + " could not load."));
+        a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+        m.head.append(a)
+      }));
+      d[l] ? console.warn(p + " only loads once. Ignoring:", g)
+      : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
+    })({ key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly" });
+  </script>
+</head>
+
+<body>
+
+<div class="title">Childhood Favorites in My Area</div>
+
+<div class="controls">
+  <label><input type="checkbox" id="parks" checked> Parks</label><br>
+  <label><input type="checkbox" id="food" checked> Food</label><br>
+  <label><input type="checkbox" id="fun" checked> Fun</label>
+</div>
+
+<gmp-map id="map" center="42.681818235748956,-71.33284604400376" zoom="12"></gmp-map>
+
+<script type="module">
+const { Marker } = await google.maps.importLibrary("marker");
+
+const locations = [
+  { name: "Dillon MacAnespie Field", category: "parks", position: { lat: 42.679387737532736, lng: -71.3584264555086 }, description: "Where I spent a lot of time playing basketball as a kid in the summer league. I would also come here with my friends to ride our ripsticks around the courts." },
+  { name: "Veterans Memorial Park", category: "parks", position: { lat: 42.67345885770123, lng: -71.29827185110061 }, description: "My favorite park in town. It has a playground, sports fields, and even a little waterpark. It’s also where my sister’s soccer tournaments were held, so I spent a lot of weekends here." },
+  { name: "Shedd Park", category: "parks", position: { lat: 42.63172384893522, lng: -71.28886924699593 }, description: "My all-time favorite park to go to. We would only go on special occasions, usually when my grandma was babysitting. It was very big, and lots of structure to climb on." },
+
+  { name: "Shaw Farm", category: "food", position: { lat: 42.681818235748956, lng: -71.33284604400376 }, description: "A place I always associate with summer. We would come here for ice cream and to look at the cows. It's easily the best ice cream in town." },
+  { name: "The Village Inn", category: "food", position: { lat: 42.68375791622271, lng: -71.28218491885842 }, description: "My favorite local restaurant. Known (to me at least) for having the best dinner rolls and steak tips." },
+  { name: "Mama's Italian Restaurant", category: "food", position: { lat: 42.66598397725083, lng: -71.32305452781776 }, description: "A favorite local Italian spot in Dracut with a warm, homey atmosphere. The portions are very generous—often enough to share with the whole family. The lasagna is a standout dish." },
+
+  { name: "Mascuppic Lake", category: "fun", position: { lat: 42.6793803177175, lng: -71.38177060468543 }, description: "This is the lake we would go swimming at and spend the 4th of July. The fireworks over the water were always the best." },
+  { name: "Hickory Hill Golf Course", category: "fun", position: { lat: 42.69815942456689, lng: -71.23517768290179 }, description: "While primarily a golf course, this spot is best remembered in winter as a sledding destination. The big front hill made it ideal for sledding and building jumps." },
+  { name: "Parlee Farms", category: "fun", position: { lat: 42.69151042171189, lng: -71.42548920475855 }, description: "The perfect farm for apple, berry, and pumpkin picking. It also offers hayrides, a petting zoo, and a variety of treats. They have the BEST apple cinnamon mini donuts that come out hot and fresh." },
+  { name: "Bowlero", category: "fun", position: { lat: 42.64145428446504, lng: -71.3573625045015 }, description: "My local bowling alley and a popular spot for birthday parties. It has a fun retro feel with blacklight bowling, arcade games, and food." }
+];
+
+const mapElement = document.querySelector("gmp-map");
+await customElements.whenDefined("gmp-map");
+const map = mapElement.innerMap;
+
+const infoWindow = new google.maps.InfoWindow();
+const markers = [];
+
+locations.forEach(loc => {
+  const marker = new Marker({ map: map, position: loc.position, title: loc.name });
+  marker.category = loc.category;
+
+  marker.addListener("click", () => {
+    map.setZoom(14);
+    map.panTo(marker.getPosition());
+
+    infoWindow.setContent(`<div><h3>${loc.name}</h3><p>${loc.description}</p></div>`);
+    infoWindow.open(map, marker);
+  });
+
+  markers.push(marker);
+});
+
+function updateMarkers() {
+  const showParks = document.getElementById("parks").checked;
+  const showFood = document.getElementById("food").checked;
+  const showFun = document.getElementById("fun").checked;
+
+  markers.forEach(marker => {
+    const visible =
+      (marker.category === "parks" && showParks) ||
+      (marker.category === "food" && showFood) ||
+      (marker.category === "fun" && showFun);
+    marker.setMap(visible ? map : null);
+  });
+}
+
+document.getElementById("parks").addEventListener("change", updateMarkers);
+document.getElementById("food").addEventListener("change", updateMarkers);
+document.getElementById("fun").addEventListener("change", updateMarkers);
+updateMarkers();
+</script>
+
+</body>
+</html>

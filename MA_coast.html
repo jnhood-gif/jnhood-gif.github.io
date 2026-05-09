@@ -1,0 +1,161 @@
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Massachusetts Coast: Navigation and Infrastructure</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.14.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Georgia, Serif;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #title {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: #222;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        z-index: 2;
+        text-align: center;
+      }
+
+      #controls {
+        position: absolute;
+        top: 90px;
+        left: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 14px;
+        z-index: 2;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      }
+
+      #legend {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        z-index: 2;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="title">Massachusetts Coast: Navigation and Infrastructure</div>
+
+ 
+    <div id="controls">
+      <strong>Toggle Layers</strong><br>
+      <label><input type="checkbox" checked onclick="toggleLayer('Lighthouses_markers')"> Lighthouses</label><br>
+      <label><input type="checkbox" checked onclick="toggleLayer('Ferry_routes')"> Ferry Routes</label><br>
+      <label><input type="checkbox" checked onclick="toggleLayer('Seaport_markers')"> Seaports</label>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.14.0/mapbox-gl.js"></script>
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1Ijoiam5ob29kIiwiYSI6ImNtbmYxcGpncDA1dWMycXExMnNjaGp0MHkifQ.eXVB3Yk6_7Q3VHrS2NDfDg';
+
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/jnhood/cmnhr6fgb001z01p10k05abme',
+        center: [-70.6, 42.1],
+        zoom: 7.8
+      });
+
+     
+      function toggleLayer(layerId) {
+        const visibility = map.getLayoutProperty(layerId, 'visibility');
+
+        if (visibility === 'visible' || visibility === undefined) {
+          map.setLayoutProperty(layerId, 'visibility', 'none');
+        } else {
+          map.setLayoutProperty(layerId, 'visibility', 'visible');
+        }
+      }
+
+      map.on('load', function () {
+        map.on('click', function (e) {
+
+          const features = map.queryRenderedFeatures(
+            [
+              [e.point.x - 8, e.point.y - 8],
+              [e.point.x + 8, e.point.y + 8]
+            ],
+            {
+              layers: ['Lighthouses_markers', 'Ferry_routes', 'Seaport_markers']
+            }
+          );
+
+          if (!features.length) return;
+
+          let feature = null;
+
+          const order = ['Seaport_markers', 'Ferry_routes', 'Lighthouses_markers'];
+
+          for (let layer of order) {
+            feature = features.find(f => f.layer.id === layer);
+            if (feature) break;
+          }
+
+          if (!feature) return;
+
+          const props = feature.properties;
+          const layerId = feature.layer.id;
+
+          let popupHTML = '';
+
+          if (layerId === 'Lighthouses_markers') {
+            popupHTML = `
+              <h3>${props.NAME}</h3>
+              <p><strong>Location:</strong> ${props.LOCATION}</p>
+            `;
+          }
+
+          else if (layerId === 'Ferry_routes') {
+            popupHTML = `
+              <h3>${props.ROUTE || 'Ferry Route'}</h3>
+              <p><strong>Operator:</strong> ${props.OPERATOR}</p>
+            `;
+          }
+
+          else if (layerId === 'Seaport_markers') {
+            popupHTML = `
+              <h3>${props.TERM_NAME}</h3>
+              <p><strong>Town:</strong> ${props.TOWN}</p>
+              <p><strong>Passenger Traffic:</strong> ${props.PASSENGER}</p>
+            `;
+          }
+
+          new mapboxgl.Popup({ offset: [0, -15] })
+            .setLngLat(e.lngLat)
+            .setHTML(popupHTML)
+            .addTo(map);
+        });
+      });
+    </script>
+  </body>
+</html>
