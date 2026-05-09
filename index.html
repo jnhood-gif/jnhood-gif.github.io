@@ -1,33 +1,283 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My WebGIS Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name | WebGIS Portfolio</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #e8f5e9;
+            color: #2e4d34;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #1b4332;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #52796f;
+            margin-bottom: 40px;
+        }
+
+        .intro {
+            background-color: #d8f3dc;
+            padding: 20px;
+            border-left: 6px solid #40916c;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .project {
+            background-color: #f4fff6;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #2d6a4f;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            background-color: #40916c;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        a:hover {
+            background-color: #2d6a4f;
+        }
+
+        .notes {
+            background-color: #ffffff;
+            border-left: 5px solid #74c69d;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .notes h3 {
+            margin-top: 0;
+            color: #1b4332;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #6b9080;
+        }
+
+    </style>
 </head>
 
 <body>
 
-<h1>My WebGIS Portfolio</h1>
+    <div class="container">
 
-<hr>
+        <h1>Your Name</h1>
+        <p class="subtitle">WebGIS Portfolio</p>
 
-<h2>ArcGIS Web App</h2>
-<a href="https://arcg.is/eWObq0" target="_blank">
-  View Web App
-</a>
+        <div class="intro">
+            <p>
+                This portfolio showcases three projects developed during the
+                WebGIS course with Dr. Zhang, refined and presented as a
+                cohesive final body of work.
+            </p>
+        </div>
 
-<hr>
+        <!-- Project 1 -->
+        <div class="project">
+            <h2>ArcGIS Ski Map</h2>
 
-<h2>Childhood Favorites in my Area</h2>
-<a href="childhood_favs.html">
-  Open Project
-</a>
+            <p>
+                An interactive ArcGIS Online application demonstrating
+                spatial analysis and web mapping techniques.
+            </p>
 
-<hr>
+            <a href="https://arcg.is/eWObq0" target="_blank">
+                View Web App
+            </a>
 
-<h2>Massachusetts Coast: Navigation and Infrastructure</h2>
-<a href="MA_coast.html">
-  Open Project
-</a>
+            <div class="notes">
+                <h3>Project Development Notes</h3>
+
+                <p>
+                    This project builds on an initial map of ski resorts in Massachusetts
+                    by improving both the design and interactivity. The basemap layers
+                    were made consistent for a more uniform look, and the ski resort
+                    symbols were updated with a clearer mountain icon so they stand
+                    out more.
+                </p>
+
+                <p>
+                    Major roads were added to help show transportation routes and
+                    improve understanding of accessibility to each ski resort.
+                    An elevation layer was also included to visualize terrain
+                    differences across the state and provide more geographic context.
+                </p>
+
+                <p>
+                    The map was also turned into a web app to increase interactivity.
+                    Users can toggle layers like roads and elevation on and off,
+                    and use a search tool to enter addresses and see how close
+                    they are to ski resorts.
+                </p>
+
+                <p>
+                    Overall, the map has been improved from a basic visualization
+                    into a more interactive tool for exploring ski resort location,
+                    access, and terrain in Massachusetts.
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project">
+            <h2>Childhood Favorites in My Area</h2>
+
+            <p>
+                A personal geographic exploration highlighting meaningful
+                childhood locations and community spaces.
+            </p>
+
+            <a href="childhood_favs.html">
+                Open Project
+            </a>
+
+            <div class="notes">
+                <h3>Project Development Notes</h3>
+
+                <p>
+                    This project builds on an initial map of childhood favorite
+                    locations by adding more points of interest and improving
+                    interactivity. Three categories—Parks, Food, and Fun—were
+                    added so locations can be explored in an organized way.
+                    Each point includes clickable popups with basic descriptions.
+                </p>
+
+                <p>
+                    A simple control panel with checkboxes was added so users
+                    can turn categories on and off depending on what they want
+                    to see. A zoom feature was also included so users can click
+                    on a location and zoom in for more detail. The title and
+                    controls were adjusted to improve readability and layout.
+                </p>
+
+                <p>
+                    This map is mainly a personal project, meant to share my own
+                    experiences and memories from different places. While it is
+                    not designed for a broad audience, it could still be useful
+                    for friends or family in the area to find nearby parks,
+                    restaurants, or activity spots, or for simple educational
+                    use in showing local places.
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project">
+            <h2>Massachusetts Coast: Navigation and Infrastructure</h2>
+
+            <p>
+                A coastal mapping project focused on navigation systems,
+                infrastructure, and spatial relationships along the
+                Massachusetts shoreline.
+            </p>
+
+            <a href="MA_coast.html">
+                Open Project
+            </a>
+
+            <div class="notes">
+                <h3>Project Development Notes</h3>
+
+                <p>
+                    This project builds upon an initial map of Massachusetts
+                    lighthouses by incorporating additional layers and
+                    significantly enhancing interactivity and user experience.
+                    Two new datasets—seaports and ferry traffic routes—were
+                    added to provide a more comprehensive view of coastal
+                    navigation and infrastructure.
+                </p>
+
+                <p>
+                    Each layer includes interactive features such as clickable
+                    elements, allowing users to explore detailed information
+                    dynamically.
+                </p>
+
+                <p>
+                    To improve usability, a control panel with checkboxes was
+                    implemented using a toggle layer function, enabling users
+                    to turn layers on and off based on their interests.
+                    Visual clarity was also improved by removing lighthouse
+                    labels to reduce clutter, refining typography, updating
+                    the title, and adding a background for better readability.
+                </p>
+
+                <p>
+                    Overall, the map has progressed from a single-layer
+                    visualization with basic interactivity to a multi-layer,
+                    user-controlled interface that enhances exploration,
+                    functionality, and user engagement. It is particularly
+                    useful for individuals traveling along the Massachusetts
+                    coast—such as ferry passengers—by helping them visualize
+                    routes, identify ports of departure and arrival,
+                    understand ferry operators, and anticipate nearby
+                    landmarks like lighthouses.
+                </p>
+
+            </div>
+        </div>
+
+        <footer>
+            © 2026 Your Name | WebGIS Portfolio
+        </footer>
+
+    </div>
 
 </body>
 </html>
